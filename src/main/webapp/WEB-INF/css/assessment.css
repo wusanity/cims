@@ -1,0 +1,87 @@
+
+.content{
+    width: auto;
+    height: 100%;
+    background: pink;
+    background: url("../common/images/bg3.jpg") no-repeat center /cover;
+}
+.content .userinfo{
+    position: absolute;
+    right: 2%;
+    top: 1%;
+    color: #fff;
+    text-align: right;
+}
+.content .userinfo span{
+    margin-left: 15px;
+}
+.content .userinfo .logout{
+    padding: 6px 20px;
+    border: none;
+    outline: none;
+    margin-top: 15px;
+    background: #897d7f;
+    color: #fff;
+}
+.content .userinfo .logout:hover{
+    background: #685e60;
+}
+
+.content h2{
+    text-align: center;
+    padding: 20px 0px;
+}
+
+.question{
+    padding-bottom: 20px;
+    padding-left: 30%;
+}
+.question h3{
+    padding: 6px 0px;
+}
+.question .option{
+    padding: 4px 0px;
+}
+.question .option input{
+    width: 37px;
+    height: 15px;
+    outline: none;
+}
+
+.tijiao{
+    text-align: center;
+    padding-bottom: 20px;
+}
+.tijiao button{
+    padding: 10px 26px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+
+.sum{
+    text-align: center;
+    padding-bottom: 20px;
+    font-weight: 600;
+}
+.sum span{
+    color: #aa1919;
+}
+
+.returnMes{
+    display: none;
+    position: fixed;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
+    top: 30px;
+    padding: 10px 10px;
+    background: rgba(0,0,0, 0.4);
+}
+.returnMes p .timeLeft{
+    color: red;
+    font-weight: bold;
+}

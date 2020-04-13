@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cims.mapper.TbIndexCassificationMapper" >
+
+    <resultMap id="BaseResultMap" type="com.cims.bean.TbIndexCassification" >
+        <id column="classification_id" property="classificationId" jdbcType="VARCHAR" />
+        <result column="cassification" property="cassification" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        classification_id, cassification
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cims.bean.TbIndexCassificationExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from "tb_index_cassification"
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from "tb_index_cassification"
+        where classification_id = #{classificationId,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from "tb_index_cassification"
+        where classification_id = #{classificationId,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.cims.bean.TbIndexCassificationExample" >
+        delete from "tb_index_cassification"
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.cims.bean.TbIndexCassification" >
+        insert into "tb_index_cassification" (classification_id, cassification)
+        values (#{classificationId,jdbcType=VARCHAR}, #{cassification,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.cims.bean.TbIndexCassification" >
+        insert into "tb_index_cassification"
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="classificationId != null" >
+                classification_id,
+            </if>
+            <if test="cassification != null" >
+                cassification,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="classificationId != null" >
+                #{classificationId,jdbcType=VARCHAR},
+            </if>
+            <if test="cassification != null" >
+                #{cassification,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.cims.bean.TbIndexCassificationExample" resultType="java.lang.Integer" >
+        select count(*) from "tb_index_cassification"
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update "tb_index_cassification"
+        <set >
+            <if test="record.classificationId != null" >
+                classification_id = #{record.classificationId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.cassification != null" >
+                cassification = #{record.cassification,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update "tb_index_cassification"
+        set classification_id = #{record.classificationId,jdbcType=VARCHAR},
+            cassification = #{record.cassification,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.cims.bean.TbIndexCassification" >
+        update "tb_index_cassification"
+        <set >
+            <if test="cassification != null" >
+                cassification = #{cassification,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where classification_id = #{classificationId,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.cims.bean.TbIndexCassification" >
+        update "tb_index_cassification"
+        set cassification = #{cassification,jdbcType=VARCHAR}
+        where classification_id = #{classificationId,jdbcType=VARCHAR}
+    </update>
+</mapper>
