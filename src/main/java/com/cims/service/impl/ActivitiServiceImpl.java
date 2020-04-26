@@ -43,6 +43,24 @@ public class ActivitiServiceImpl implements ActivitiService{
 		//评价表编号，有两套，为1表示课程评价，为2表示实训评价
 		runtimeService.startProcessInstanceByKey("templateVerify", status);
 	}
+	//查询流程实例
+	@Override
+	public Task queryTask(String assignee, String status) {
+		Task singleResult;
+		if(null == assignee || ("").equals(assignee)) {
+			singleResult = taskService.createTaskQuery()
+				.processDefinitionKey("templateVerify")
+				.processInstanceBusinessKey(status)
+				.singleResult();
+		}else {
+			singleResult = taskService.createTaskQuery()
+				.processDefinitionKey("templateVerify")
+				.taskAssignee(assignee)
+				.processInstanceBusinessKey(status)
+				.singleResult();
+		}	
+		return singleResult;
+	}
 	//完成流程实例
 	@Override
 	public void completeTask(String assignee,String status) {
@@ -55,21 +73,25 @@ public class ActivitiServiceImpl implements ActivitiService{
 	}
 	//删除流程实例
 	public void deleteInstance(String status) {
-		HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery() 
-				.singleResult();
-		String processInstanceId = hpi.getId(); //流程实例ID
-		//判断该流程实例是否结束，未结束和结束两者删除表的信息是不一样的。// 使用流程实例ID查询
-		ProcessInstance pi = runtimeService.createProcessInstanceQuery()
-				.processInstanceId(processInstanceId)
-				.processInstanceBusinessKey(status)
-				.singleResult();
-		if(pi==null){
-			//该流程实例已经完成了
-			historyService.deleteHistoricProcessInstance(processInstanceId);
-		}else{
-			//该流程实例未结束的
-			runtimeService.deleteProcessInstance(processInstanceId,"");
-			historyService.deleteHistoricProcessInstance(processInstanceId);//(顺序不能换)
+		List<HistoricProcessInstance> list = historyService.createHistoricProcessInstanceQuery() 
+				.list();
+		for(HistoricProcessInstance hpi : list) {
+			String processInstanceId = hpi.getId(); //流程实例ID
+			//判断该流程实例是否结束，未结束和结束两者删除表的信息是不一样的。// 使用流程实例ID查询
+			ProcessInstance pi = runtimeService.createProcessInstanceQuery()
+					.processInstanceId(processInstanceId)
+					.processInstanceBusinessKey(status)
+					.singleResult();
+			if(pi==null){
+				//该流程实例已经完成了
+				historyService.deleteHistoricProcessInstance(processInstanceId);
+			}else{
+				//该流程实例未结束的
+				runtimeService.deleteProcessInstance(processInstanceId,"");
+				historyService.deleteHistoricProcessInstance(processInstanceId);//(顺序不能换)
+			}
 		}
+		
 	}
+	
 }

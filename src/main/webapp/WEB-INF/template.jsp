@@ -28,9 +28,9 @@
 	        <caption style="font-size:20px;text-align:center;">${str}</caption>
 	        <tr><th style="text-align:center;font-family:黑体;">一级指标</t> <th style="text-align:center;font-family:黑体;">二级指标</th></tr>
 	                <c:forEach items="${hashMap}" var="map">
-	                <tr><td rowspan=${fn:length(map.value)} style="width:160px;"><input type="checkbox" name="fItem" value="${map.key.iid}">${map.key.indicatorName} <input name="${map.key.iid}" value="" style="width: 37px;">%</td><td><input type="checkbox" name="sItem" value="${map.value[0].iid}">${map.value[0].indicatorName}<input name="${map.value[0].iid}" value="" style="width: 37px;">%</td></tr>
+	                <tr><td rowspan=${fn:length(map.value)} style="width:160px;"><input type="checkbox" name="fItem" value="${map.key.iid}">${map.key.indicatorName} <input name="${map.key.iid}" value="" style="width: 37px;">%</td><td><input type="checkbox" name="sItem" value="${map.value[0].iid}">${map.value[0].indicatorName} <input name="${map.value[0].iid}" value="" style="width: 37px;">%</td></tr>
 	                    <c:forEach items="${map.value}" var="template" begin="1">
-	                        <tr><td><input type="checkbox" name="sItem" value="${template.iid}" >${template.indicatorName} <td></tr>
+	                        <tr><td><input type="checkbox" name="sItem" value="${template.iid}" >${template.indicatorName} <input name="${template.iid}" value="" style="width: 37px;">%<td></tr>
 	                    </c:forEach>
 	                </c:forEach>
 	    </table>

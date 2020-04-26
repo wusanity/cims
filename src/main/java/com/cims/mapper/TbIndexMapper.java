@@ -23,4 +23,6 @@ public interface TbIndexMapper {
     int updateByExampleSelective(@Param("record") TbIndex record, @Param("example") TbIndexExample example);
 
     int updateByExample(@Param("record") TbIndex record, @Param("example") TbIndexExample example);
+    
+    
 }

@@ -60,7 +60,7 @@
         <button ng-click="logout()" class="logout">退出</button>
     </div>
     <div style="position:relative;left:550px;top:35%;">
-      	<form enctype="multipart/form-data" id="batchUpload"  action="/excel/import" method="post" class="form-horizontal">    
+      	<form enctype="multipart/form-data" id="batchUpload"  action="/cims/import" method="post" class="form-horizontal">    
         	<button class="file" id="uploadEventBtn" style="height:50px;width:150px;font-size: 25px"  type="button" >选择文件</button>  
         	<input type="file" name="file"  style="width:0px;height:0px;" id="uploadEventFile">  
         	<input id="uploadEventPath"  disabled="disabled"  type="text" placeholder="请择excel表" style="border: 1px solid #e6e6e6; height: 50px;width: 300px;" />                                           
@@ -94,7 +94,7 @@
             } else if (uploadEventFile.lastIndexOf(".xls") < 0) {//可判断以.xls和.xlsx结尾的excel  
                 alert("只能上传Excel文件");
             } else {
-                var url = "excel/import";
+                var url = "/cims/import";
                 var formData = new FormData($('form')[0]);
                 user.sendAjaxRequest(url, "POST", formData);
             }

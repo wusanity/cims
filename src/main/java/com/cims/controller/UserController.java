@@ -40,7 +40,7 @@ public class UserController {
 		password =Md5Util.md5(password);
 		if(null != tbUserInfo) {
 			if(password.equals(tbUserInfo.getPassword())) {
-				httpSession.setAttribute("userInfo", tbUserInfo);
+				httpSession.setAttribute("userInfo", tbUserInfo);				
 				if(ifPrivilege==1){
 					return "leader";
 				}else if(ifPrivilege==2){

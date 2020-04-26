@@ -19,6 +19,8 @@ public interface TbClassInfoMapper {
     List<TbClassInfo> selectByExample(TbClassInfoExample example);
 
     TbClassInfo selectByPrimaryKey(String cid);
+    
+    List<TbClassInfo> selectByUid(String uid); 
 
     int updateByExampleSelective(@Param("record") TbClassInfo record, @Param("example") TbClassInfoExample example);
 
@@ -27,4 +29,6 @@ public interface TbClassInfoMapper {
     int updateByPrimaryKeySelective(TbClassInfo record);
 
     int updateByPrimaryKey(TbClassInfo record);
+    
+    List<TbClassInfo> selectAll();
 }

@@ -5,7 +5,7 @@ package com.cims.bean;
  * 
  * @author wcyong
  * 
- * @date 2020-04-12
+ * @date 2020-04-16
  */
 public class TbTempEvaluationTemplate {
     /**
@@ -42,6 +42,8 @@ public class TbTempEvaluationTemplate {
      * 状态，1表示课程评价，2表示实训评价
      */
     private Integer status;
+
+    private Integer version;
 
     public Integer getEid() {
         return eid;
@@ -97,5 +99,13 @@ public class TbTempEvaluationTemplate {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 }

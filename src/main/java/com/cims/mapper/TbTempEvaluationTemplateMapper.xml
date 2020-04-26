@@ -10,86 +10,14 @@
         <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
         <result column="weight" property="weight" jdbcType="CHAR" />
         <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="version" property="version" jdbcType="INTEGER" />
     </resultMap>
 
-    <sql id="Example_Where_Clause" >
-        <where >
-            <foreach collection="oredCriteria" item="criteria" separator="or" >
-                <if test="criteria.valid" >
-                    <trim prefix="(" suffix=")" prefixOverrides="and" >
-                        <foreach collection="criteria.criteria" item="criterion" >
-                            <choose >
-                                <when test="criterion.noValue" >
-                                    and ${criterion.condition}
-                                </when>
-                                <when test="criterion.singleValue" >
-                                    and ${criterion.condition} #{criterion.value}
-                                </when>
-                                <when test="criterion.betweenValue" >
-                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                                </when>
-                                <when test="criterion.listValue" >
-                                    and ${criterion.condition}
-                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                                        #{listItem}
-                                    </foreach>
-                                </when>
-                            </choose>
-                        </foreach>
-                    </trim>
-                </if>
-            </foreach>
-        </where>
-    </sql>
-
-    <sql id="Update_By_Example_Where_Clause" >
-        <where >
-            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-                <if test="criteria.valid" >
-                    <trim prefix="(" suffix=")" prefixOverrides="and" >
-                        <foreach collection="criteria.criteria" item="criterion" >
-                            <choose >
-                                <when test="criterion.noValue" >
-                                    and ${criterion.condition}
-                                </when>
-                                <when test="criterion.singleValue" >
-                                    and ${criterion.condition} #{criterion.value}
-                                </when>
-                                <when test="criterion.betweenValue" >
-                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                                </when>
-                                <when test="criterion.listValue" >
-                                    and ${criterion.condition}
-                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                                        #{listItem}
-                                    </foreach>
-                                </when>
-                            </choose>
-                        </foreach>
-                    </trim>
-                </if>
-            </foreach>
-        </where>
-    </sql>
-
     <sql id="Base_Column_List" >
-        eid, classification_id, indicator_id, indicator_name, parent_id, weight, status
+        eid, classification_id, indicator_id, indicator_name, parent_id, weight, status, 
+        version
     </sql>
 
-    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cims.bean.TbTempEvaluationTemplateExample" >
-        select
-        <if test="distinct" >
-            distinct
-        </if>
-        <include refid="Base_Column_List" />
-        from tb_temp_evaluation_template
-        <if test="_parameter != null" >
-            <include refid="Example_Where_Clause" />
-        </if>
-        <if test="orderByClause != null" >
-            order by ${orderByClause}
-        </if>
-    </select>
 	<select id="selectMaxEid" resultType="Integer">
 		select max(eid) from tb_temp_evaluation_template
 	</select>
@@ -103,26 +31,24 @@
         where eid = #{eid,jdbcType=INTEGER}
     </select>
 	<select id="selectAllByStatus" resultMap="BaseResultMap" parameterType="String" >
-		select 
-        <include refid="Base_Column_List" />
-        from tb_temp_evaluation_template
-        where status = #{status}
+		SELECT 
+        eid, classification_id, indicator_id, indicator_name, parent_id, weight, STATUS, VERSION
+        FROM tb_temp_evaluation_template
+        WHERE STATUS = #{status} AND VERSION = (SELECT MAX(VERSION) FROM tb_temp_evaluation_template WHERE STATUS = #{status})
 	</select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
         delete from tb_temp_evaluation_template
         where eid = #{eid,jdbcType=INTEGER}
     </delete>
-
-    <delete id="deleteByExample" parameterType="com.cims.bean.TbTempEvaluationTemplateExample" >
-        delete from tb_temp_evaluation_template
-        <if test="_parameter != null" >
-            <include refid="Example_Where_Clause" />
-        </if>
+    
+    <delete id="deleteByStatus" parameterType="String">
+    	delete from tb_temp_evaluation_template where status = #{status}
     </delete>
+    
 	<insert id="multiInsert" parameterType="list">
 		insert into tb_temp_evaluation_template (eid, classification_id, indicator_id, 
             indicator_name, parent_id, weight, 
-            status)
+            status,version)
             values 
             <foreach collection="list" item="temp" separator=",">
             	(
@@ -132,144 +58,19 @@
             		#{temp.indicatorName},
             		#{temp.parentId},
             		#{temp.weight},
-            		#{temp.status}
+            		#{temp.status},
+            		#{temp.version}
             	)
             </foreach>
 	</insert>
     <insert id="insert" parameterType="com.cims.bean.TbTempEvaluationTemplate" >
         insert into tb_temp_evaluation_template (eid, classification_id, indicator_id, 
             indicator_name, parent_id, weight, 
-            status)
+            status, version)
         values (#{eid,jdbcType=INTEGER}, #{classificationId,jdbcType=VARCHAR}, #{indicatorId,jdbcType=VARCHAR}, 
             #{indicatorName,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{weight,jdbcType=CHAR}, 
-            #{status,jdbcType=INTEGER})
+            #{status,jdbcType=INTEGER}, #{version,jdbcType=INTEGER})
     </insert>
-
-    <insert id="insertSelective" parameterType="com.cims.bean.TbTempEvaluationTemplate" >
-        insert into tb_temp_evaluation_template
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="eid != null" >
-                eid,
-            </if>
-            <if test="classificationId != null" >
-                classification_id,
-            </if>
-            <if test="indicatorId != null" >
-                indicator_id,
-            </if>
-            <if test="indicatorName != null" >
-                indicator_name,
-            </if>
-            <if test="parentId != null" >
-                parent_id,
-            </if>
-            <if test="weight != null" >
-                weight,
-            </if>
-            <if test="status != null" >
-                status,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="eid != null" >
-                #{eid,jdbcType=INTEGER},
-            </if>
-            <if test="classificationId != null" >
-                #{classificationId,jdbcType=VARCHAR},
-            </if>
-            <if test="indicatorId != null" >
-                #{indicatorId,jdbcType=VARCHAR},
-            </if>
-            <if test="indicatorName != null" >
-                #{indicatorName,jdbcType=VARCHAR},
-            </if>
-            <if test="parentId != null" >
-                #{parentId,jdbcType=VARCHAR},
-            </if>
-            <if test="weight != null" >
-                #{weight,jdbcType=CHAR},
-            </if>
-            <if test="status != null" >
-                #{status,jdbcType=INTEGER},
-            </if>
-        </trim>
-    </insert>
-
-    <select id="countByExample" parameterType="com.cims.bean.TbTempEvaluationTemplateExample" resultType="java.lang.Integer" >
-        select count(*) from tb_temp_evaluation_template
-        <if test="_parameter != null" >
-            <include refid="Example_Where_Clause" />
-        </if>
-    </select>
-
-    <update id="updateByExampleSelective" parameterType="map" >
-        update tb_temp_evaluation_template
-        <set >
-            <if test="record.eid != null" >
-                eid = #{record.eid,jdbcType=INTEGER},
-            </if>
-            <if test="record.classificationId != null" >
-                classification_id = #{record.classificationId,jdbcType=VARCHAR},
-            </if>
-            <if test="record.indicatorId != null" >
-                indicator_id = #{record.indicatorId,jdbcType=VARCHAR},
-            </if>
-            <if test="record.indicatorName != null" >
-                indicator_name = #{record.indicatorName,jdbcType=VARCHAR},
-            </if>
-            <if test="record.parentId != null" >
-                parent_id = #{record.parentId,jdbcType=VARCHAR},
-            </if>
-            <if test="record.weight != null" >
-                weight = #{record.weight,jdbcType=CHAR},
-            </if>
-            <if test="record.status != null" >
-                status = #{record.status,jdbcType=INTEGER},
-            </if>
-        </set>
-        <if test="_parameter != null" >
-            <include refid="Update_By_Example_Where_Clause" />
-        </if>
-    </update>
-
-    <update id="updateByExample" parameterType="map" >
-        update tb_temp_evaluation_template
-        set eid = #{record.eid,jdbcType=INTEGER},
-            classification_id = #{record.classificationId,jdbcType=VARCHAR},
-            indicator_id = #{record.indicatorId,jdbcType=VARCHAR},
-            indicator_name = #{record.indicatorName,jdbcType=VARCHAR},
-            parent_id = #{record.parentId,jdbcType=VARCHAR},
-            weight = #{record.weight,jdbcType=CHAR},
-            status = #{record.status,jdbcType=INTEGER}
-        <if test="_parameter != null" >
-            <include refid="Update_By_Example_Where_Clause" />
-        </if>
-    </update>
-
-    <update id="updateByPrimaryKeySelective" parameterType="com.cims.bean.TbTempEvaluationTemplate" >
-        update tb_temp_evaluation_template
-        <set >
-            <if test="classificationId != null" >
-                classification_id = #{classificationId,jdbcType=VARCHAR},
-            </if>
-            <if test="indicatorId != null" >
-                indicator_id = #{indicatorId,jdbcType=VARCHAR},
-            </if>
-            <if test="indicatorName != null" >
-                indicator_name = #{indicatorName,jdbcType=VARCHAR},
-            </if>
-            <if test="parentId != null" >
-                parent_id = #{parentId,jdbcType=VARCHAR},
-            </if>
-            <if test="weight != null" >
-                weight = #{weight,jdbcType=CHAR},
-            </if>
-            <if test="status != null" >
-                status = #{status,jdbcType=INTEGER},
-            </if>
-        </set>
-        where eid = #{eid,jdbcType=INTEGER}
-    </update>
 
     <update id="updateByPrimaryKey" parameterType="com.cims.bean.TbTempEvaluationTemplate" >
         update tb_temp_evaluation_template
@@ -278,7 +79,12 @@
             indicator_name = #{indicatorName,jdbcType=VARCHAR},
             parent_id = #{parentId,jdbcType=VARCHAR},
             weight = #{weight,jdbcType=CHAR},
-            status = #{status,jdbcType=INTEGER}
+            status = #{status,jdbcType=INTEGER},
+            version = #{version,jdbcType=INTEGER}
         where eid = #{eid,jdbcType=INTEGER}
     </update>
+    
+    <select id="selectMaxVersion" resultType="Integer">
+    	select max(version) from tb_temp_evaluation_template
+    </select>
 </mapper>

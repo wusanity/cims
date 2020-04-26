@@ -9,4 +9,6 @@ public interface TempEvaluationTemplateService {
 	public void addEvaluationTemplate(ArrayList<TbTempEvaluationTemplate> list);
 	public Integer findMaxEid();
 	public HashMap<TbTempEvaluationTemplate,ArrayList<TbTempEvaluationTemplate>> findAllByStatus(String status);
+	public void deleteByStatus(String status);
+	public Integer findMaxVersion();
 }

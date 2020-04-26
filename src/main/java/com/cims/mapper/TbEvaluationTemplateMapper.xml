@@ -27,6 +27,18 @@
 	<select id="selectMaxEid" resultType="Integer">
 		select max(eid) from tb_evaluation_template
 	</select>
+	<select id="selectByZero" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from tb_evaluation_template
+		where parent_id &lt;&gt; '0'
+	</select>
+	<select id="selectEqualZero" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from tb_evaluation_template
+		where parent_id = '0'
+	</select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
         delete from tb_evaluation_template
         where eid = #{eid,jdbcType=VARCHAR}

@@ -11,7 +11,7 @@ public class TbFirstIndexScore {
     /**
      * 唯一标识
      */
-    private String fid;
+    private Integer fid;
 
     /**
      * 指标分类编号
@@ -48,15 +48,17 @@ public class TbFirstIndexScore {
      */
     private Integer semester;
 
-    public String getFid() {
-        return fid;
-    }
+   
 
-    public void setFid(String fid) {
-        this.fid = fid == null ? null : fid.trim();
-    }
+    public Integer getFid() {
+		return fid;
+	}
 
-    public String getClassificationId() {
+	public void setFid(Integer fid) {
+		this.fid = fid;
+	}
+
+	public String getClassificationId() {
         return classificationId;
     }
 

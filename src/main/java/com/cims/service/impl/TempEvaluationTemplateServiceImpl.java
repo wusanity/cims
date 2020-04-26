@@ -48,4 +48,14 @@ public class TempEvaluationTemplateServiceImpl implements TempEvaluationTemplate
 		return hashMap;
 	}
 
+	@Override
+	public void deleteByStatus(String status) {
+		tbTempEvaluationTemplateMapper.deleteByStatus(status);
+	}
+
+	@Override
+	public Integer findMaxVersion() {
+		return tbTempEvaluationTemplateMapper.selectMaxVersion();
+	}
+
 }

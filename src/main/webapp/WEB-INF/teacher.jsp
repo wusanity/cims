@@ -52,15 +52,15 @@
 	            <div class="item">
 	                <div class="title" style="text-align:center;font-size:25px;">待办</div>
 	                <div class="con">
-	                    <div><a href="/cims/startInstance?status=1" style="color:#0a68ae; font-size:20px;">课程评价表</a></div>
-	                    <div><a href="/cims/startInstance?status=2" style="color:#0a68ae; font-size:20px;">实训评价表</a></div>
+	                    <div><a href="/cims/queryTask?status=1" style="color:#0a68ae; font-size:20px;">课程评价表</a></div>
+	                    <div><a href="/cims/queryTask?status=2" style="color:#0a68ae; font-size:20px;">实训评价表</a></div>
 	                </div>
 	            </div>
 	            <hr>
 	            <div class="item">
 	                <div class="title" style="text-align:center;font-size:25px;">评价结果</div>
 	                <div class="con">
-	                    <div><a href="#" style=" color:#0a68ae; font-size:20px;">可视化</a></div>
+	                    <div><a href="/cims/view" style=" color:#0a68ae; font-size:20px;">可视化</a></div>
 	                </div>
 	            </div>
 	        </div>

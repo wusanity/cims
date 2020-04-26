@@ -31,8 +31,12 @@ public class EvaluationTemplateController {
 		float sum = 0;
 		HashMap<TbIndex, ArrayList<TbIndex>> hashMap = (HashMap<TbIndex, ArrayList<TbIndex>>) session.getAttribute("hashMap");
 		Integer eid = tempEvaluationTemplateService.findMaxEid();
+		Integer version = tempEvaluationTemplateService.findMaxVersion();
 		if(null == eid) {
 			eid = 1;
+		}
+		if(null == version) {
+			version = 1;
 		}
 		for(Map.Entry<TbIndex, ArrayList<TbIndex>> entry : hashMap.entrySet()) {
 			TbTempEvaluationTemplate tbEvaluationTemplate = new TbTempEvaluationTemplate();
@@ -47,6 +51,7 @@ public class EvaluationTemplateController {
 					sum = sum + Float.parseFloat(request.getParameter(fItem[i]));
 					tbEvaluationTemplate.setStatus(Integer.parseInt(request.getParameter("type")));
 					tbEvaluationTemplate.setEid(eid++);	
+					tbEvaluationTemplate.setVersion(version);
 					list.add(tbEvaluationTemplate);
 					continue;
 				}
@@ -70,6 +75,7 @@ public class EvaluationTemplateController {
 						tbEvaluationTemplate.setWeight(request.getParameter(sItem[j]));
 						tbEvaluationTemplate.setStatus(Integer.parseInt(request.getParameter("type")));
 						tbEvaluationTemplate.setEid(eid++);		
+						tbEvaluationTemplate.setVersion(version);
 						list.add(tbEvaluationTemplate);
 					}
 					

@@ -25,4 +25,8 @@ public interface TbEvaluationTemplateMapper {
     int updateByPrimaryKey(TbEvaluationTemplate record);
 
 	Integer selectMaxEid();
+	
+	List<TbEvaluationTemplate> selectByZero();
+	
+	List<TbEvaluationTemplate> selectEqualZero();
 }

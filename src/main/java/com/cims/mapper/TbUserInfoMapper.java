@@ -21,6 +21,8 @@ public interface TbUserInfoMapper {
     TbUserInfo selectByPrimaryKey(String uid);
     
     TbUserInfo selectPwd(TbUserInfo tbUserInfo);
+    
+    List<TbUserInfo> selectAll();
 
     int updateByExampleSelective(@Param("record") TbUserInfo record, @Param("example") TbUserInfoExample example);
 

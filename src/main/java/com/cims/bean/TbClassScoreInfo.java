@@ -11,7 +11,7 @@ public class TbClassScoreInfo {
     /**
      * 编号，唯一标识
      */
-    private String sid;
+    private Integer sid;
 
     /**
      * 课程编号
@@ -33,15 +33,17 @@ public class TbClassScoreInfo {
      */
     private Integer semester;
 
-    public String getSid() {
-        return sid;
-    }
+    
 
-    public void setSid(String sid) {
-        this.sid = sid == null ? null : sid.trim();
-    }
+    public Integer getSid() {
+		return sid;
+	}
 
-    public String getCid() {
+	public void setSid(Integer sid) {
+		this.sid = sid;
+	}
+
+	public String getCid() {
         return cid;
     }
 

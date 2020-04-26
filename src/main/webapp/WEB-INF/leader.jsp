@@ -47,31 +47,12 @@
         <p>当前用户: <span>${userInfo.tname}</span></p>
         <button ng-click="logout()" class="logout">退出</button>
     </div >
-    <!--<ul>
-        <li ng-repeat="list in lists">
-            <a ng-href="{{linkUrl}}" class="clearfix" ng-click="urlHandle($index)" target="_self">
-                <p class="course_name">{{list.course_name}}</p>
-                <p class="course_time">{{list.course_time}}</p>
-                <p class="teacher_name">{{list.teacher_name}}</p>
-                <p class="status" ng-class="{true:'complete',false:'uncomplete'}[list.status]">{{list.status==true?"已完成":"未完成"}}</p>
-            </a>
-        </li>
-    </ul>
-    -->
-   <!-- <div  align="center" style="width:1500px;height:500px;">
-            <button id="dataImport" type="button" style="font-size:30px;background-color: #7ED321;width:200px;height:70px;position:relative;top:170px">数据导入</button>
-                </p>
-            <button id="template" type="button" style="font-size:30px;background-color: #7ED321;width:200px;height:70px;position:relative;top:170px">评价表管理</button>
-
-
-    </div>
-</div> --> 
 	<div class="outer">
 	        <div class="menu">
 	            <div class="item">
 	                <div class="title" style="text-align:center;font-size:25px;">数据导入</div>
 	                <div class="con">
-	                    <div><a href="#" style="color:#0a68ae; font-size:20px;">数据导入</a></div>
+	                    <div><a href="/cims/upload" style="color:#0a68ae; font-size:20px;">数据导入</a></div>
 	                </div>
 	            </div>
 	            <hr>
@@ -86,18 +67,20 @@
 	            <div class="item">
 	                <div class="title" style="text-align:center;font-size:25px;">待办</div>
 	                <div class="con">
-	                    <div><a href="/cims/getByStatus?status=1" style="color:#0a68ae; font-size:20px;">课程评价表</a></div>
-	                    <div><a href="/cims/getByStatus?status=2" style="color:#0a68ae; font-size:20px;">实训评价表</a></div>
+	                    <div><a href="/cims/managerGet?status=1" style="color:#0a68ae; font-size:20px;">课程评价表</a></div>
+	                    <div><a href="/cims/managerGet?status=2" style="color:#0a68ae; font-size:20px;">实训评价表</a></div>
 	                </div>
 	            </div>
 	            <hr>
 	            <div class="item">
 	                <div class="title" style="text-align:center;font-size:25px;">评价结果</div>
 	                <div class="con">
-	                    <div><a href="#" style=" color:#0a68ae; font-size:20px;">可视化</a></div>
+	                    <div><a href="/cims/view" style=" color:#0a68ae; font-size:20px;">可视化</a></div>
 	                </div>
 	            </div>
+
 	        </div>
+	        
 	</div>
 </div>
 <div class="footer">
