@@ -72,6 +72,18 @@
     <sql id="Base_Column_List" >
         iid, classification_id, indicator_name, parent_id
     </sql>
+    
+    <select id="selectByName" parameterType="String" resultMap="BaseResultMap">
+    	select
+        <include refid="Base_Column_List" />
+        from tb_index
+        where indicator_name = #{name} 
+    </select>
+    
+    <select id="selectMaxIid" parameterType="String" resultType="String">
+    	SELECT MAX(iid) from tb_index
+    </select>
+    
 	<select id="selectIndex" parameterType="list" resultMap="BaseResultMap">
 		select
         <include refid="Base_Column_List" />
@@ -102,7 +114,19 @@
             <include refid="Example_Where_Clause" />
         </if>
     </delete>
-
+	
+	<insert id="multiInsert" parameterType="list">
+		insert into tb_index (iid, classification_id, indicator_name, 
+            parent_id)
+        values
+        <foreach collection="list" item="temp" separator=",">
+        	(#{temp.iid,jdbcType=VARCHAR}, 
+        	 #{temp.classificationId,jdbcType=VARCHAR}, 
+        	 #{temp.indicatorName,jdbcType=VARCHAR}, 
+             #{temp.parentId,jdbcType=VARCHAR})
+        </foreach>
+	</insert>
+	
     <insert id="insert" parameterType="com.cims.bean.TbIndex" >
         insert into tb_index (iid, classification_id, indicator_name, 
             parent_id)

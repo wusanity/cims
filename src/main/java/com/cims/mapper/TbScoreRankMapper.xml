@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cims.mapper.TbScoreRankMapper" >
+
+    <resultMap id="BaseResultMap" type="com.cims.bean.TbScoreRank" >
+        <id column="rid" property="rid" jdbcType="INTEGER" />
+        <result column="cname" property="cname" jdbcType="VARCHAR" />
+        <result column="tname" property="tname" jdbcType="VARCHAR" />
+        <result column="score" property="score" jdbcType="REAL" />
+        <result column="cid" property="cid" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <resultMap id="BaseResultMapCustom" type="com.cims.bean.TbScoreRankCustom" >
+        <id column="rid" property="rid" jdbcType="INTEGER" />
+        <result column="cname" property="cname" jdbcType="VARCHAR" />
+        <result column="tname" property="tname" jdbcType="VARCHAR" />
+        <result column="score" property="score" jdbcType="REAL" />
+        <result column="cid" property="cid" jdbcType="VARCHAR" />
+        <result column="school_year" property="schoolYear" jdbcType="VARCHAR" />
+        <result column="semester" property="semester" jdbcType="INTEGER" />
+</resultMap>
+    
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        rid, cname, tname, score, cid
+    </sql>
+	
+	<select id="selectAll" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+ 		from  tb_score_rank
+	</select>
+	
+	<select id="selectCustoms" resultMap="BaseResultMapCustom">
+		SELECT b.cname,c.tname,a.score,a.cid,a.school_year,a.semester FROM tb_class_score_info a,tb_class_info b,tb_user_info c WHERE a.cid = b.cid AND b.uid = c.uid;
+	</select>
+	
+	<select id="selecTbByCid" parameterType="String" resultMap="BaseResultMap">
+		SELECT a.cid,b.cname,c.tname FROM tb_class_score_info a,tb_class_info b,tb_user_info c WHERE a.cid = #{cid,jdbcType=VARCHAR} and a.cid = b.cid AND b.uid = c.uid LIMIT 0,1;
+	</select>
+	
+	<insert id="multiInsert" parameterType="list">
+		insert into tb_score_rank (cname, tname, 
+            score, cid)
+        values
+         <foreach collection="list" item="temp" separator=",">
+         	(#{temp.cname,jdbcType=VARCHAR}, 
+         	 #{temp.tname,jdbcType=VARCHAR}, 
+             #{temp.score,jdbcType=REAL}, 
+             #{temp.cid,jdbcType=VARCHAR})
+         </foreach>
+	</insert>
+	
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cims.bean.TbScoreRankExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from tb_score_rank
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from tb_score_rank
+        where rid = #{rid,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from tb_score_rank
+        where rid = #{rid,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.cims.bean.TbScoreRankExample" >
+        delete from tb_score_rank
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.cims.bean.TbScoreRank" >
+        insert into tb_score_rank (rid, cname, tname, 
+            score, cid)
+        values (#{rid,jdbcType=INTEGER}, #{cname,jdbcType=VARCHAR}, #{tname,jdbcType=VARCHAR}, 
+            #{score,jdbcType=REAL}, #{cid,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.cims.bean.TbScoreRank" >
+        insert into tb_score_rank
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="rid != null" >
+                rid,
+            </if>
+            <if test="cname != null" >
+                cname,
+            </if>
+            <if test="tname != null" >
+                tname,
+            </if>
+            <if test="score != null" >
+                score,
+            </if>
+            <if test="cid != null" >
+                cid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="rid != null" >
+                #{rid,jdbcType=INTEGER},
+            </if>
+            <if test="cname != null" >
+                #{cname,jdbcType=VARCHAR},
+            </if>
+            <if test="tname != null" >
+                #{tname,jdbcType=VARCHAR},
+            </if>
+            <if test="score != null" >
+                #{score,jdbcType=REAL},
+            </if>
+            <if test="cid != null" >
+                #{cid,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.cims.bean.TbScoreRankExample" resultType="java.lang.Integer" >
+        select count(*) from tb_score_rank
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update tb_score_rank
+        <set >
+            <if test="record.rid != null" >
+                rid = #{record.rid,jdbcType=INTEGER},
+            </if>
+            <if test="record.cname != null" >
+                cname = #{record.cname,jdbcType=VARCHAR},
+            </if>
+            <if test="record.tname != null" >
+                tname = #{record.tname,jdbcType=VARCHAR},
+            </if>
+            <if test="record.score != null" >
+                score = #{record.score,jdbcType=REAL},
+            </if>
+            <if test="record.cid != null" >
+                cid = #{record.cid,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update tb_score_rank
+        set rid = #{record.rid,jdbcType=INTEGER},
+            cname = #{record.cname,jdbcType=VARCHAR},
+            tname = #{record.tname,jdbcType=VARCHAR},
+            score = #{record.score,jdbcType=REAL},
+            cid = #{record.cid,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.cims.bean.TbScoreRank" >
+        update tb_score_rank
+        <set >
+            <if test="cname != null" >
+                cname = #{cname,jdbcType=VARCHAR},
+            </if>
+            <if test="tname != null" >
+                tname = #{tname,jdbcType=VARCHAR},
+            </if>
+            <if test="score != null" >
+                score = #{score,jdbcType=REAL},
+            </if>
+            <if test="cid != null" >
+                cid = #{cid,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where rid = #{rid,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.cims.bean.TbScoreRank" >
+        update tb_score_rank
+        set cname = #{cname,jdbcType=VARCHAR},
+            tname = #{tname,jdbcType=VARCHAR},
+            score = #{score,jdbcType=REAL},
+            cid = #{cid,jdbcType=VARCHAR}
+        where rid = #{rid,jdbcType=INTEGER}
+    </update>
+</mapper>

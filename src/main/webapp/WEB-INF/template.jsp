@@ -20,7 +20,7 @@
 <div class="content" >
     <div class="userinfo">
         <p>当前用户: <span>${userInfo.tname}</span></p>
-        <button ng-click="logout()" class="logout">退出</button>
+        <button id="logout" onclik="window.location.href='/cims/logout'" class="logout">退出</button>
     </div>
    <form action="/cims/gTemplate" id="gTemplate" style="position:relative;left:350px" id="gTemplate">
     	<input type="hidden" name="type" value="${type}"/>

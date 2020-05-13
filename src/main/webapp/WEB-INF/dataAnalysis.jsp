@@ -12,7 +12,7 @@
 </head>
 <body ng-app="myApp" ng-controller="myCtrl">
 <div class="header">
-    <img src="common/images/logo.jpg" alt="logo" class="logo">
+    <img src="common/images/logo2.jpg" alt="logo" class="logo">
     <h1>武汉商学院</h1>
     <img src="common/images/good_study.jpg" alt="描述" class="desc">
 </div>
@@ -22,7 +22,7 @@
 
     <div class="userinfo">
         <p>当前用户: <span>${userInfo.tname}</span></p>
-        <button ng-click="logout()" class="logout">退出</button>
+        <button id="logout" onclik="window.location.href='/cims/logout'" class="logout">退出</button>
     </div>
     <ul>
 	    <c:forEach items="${viewCustoms}" var="temp">

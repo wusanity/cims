@@ -40,5 +40,18 @@ public class IndexServiceImpl implements IndexService{
 		}
 		return map;
 	}
+	@Override
+	public TbIndex findByName(String name) {
+		
+		return tbIndexMapper.selectByName(name);
+	}
+	@Override
+	public String findMaxIid() {
+		return tbIndexMapper.selectMaxIid();
+	}
+	@Override
+	public void addBatch(ArrayList<TbIndex> list) {
+		tbIndexMapper.multiInsert(list);
+	}
 
 }

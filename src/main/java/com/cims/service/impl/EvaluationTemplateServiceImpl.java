@@ -18,7 +18,13 @@ public class EvaluationTemplateServiceImpl implements EvaluationTemplateService{
 	}
 	@Override
 	public Integer findMaxEid() {
-		return tbEvaluationTemplateMapper.selectMaxEid();
+		Integer max = tbEvaluationTemplateMapper.selectMaxEid();
+		if(null == max) {
+			return 1;
+		}else {
+			return max;
+		}
+		
 	}
 	
 }

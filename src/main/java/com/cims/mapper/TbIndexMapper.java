@@ -23,6 +23,12 @@ public interface TbIndexMapper {
     int updateByExampleSelective(@Param("record") TbIndex record, @Param("example") TbIndexExample example);
 
     int updateByExample(@Param("record") TbIndex record, @Param("example") TbIndexExample example);
+
+	TbIndex selectByName(String name);
+
+	String selectMaxIid();
+
+	int multiInsert(ArrayList<TbIndex> list);
     
     
 }

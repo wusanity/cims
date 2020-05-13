@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.cims.bean.TbUserInfo;
 import com.cims.service.UserService;
 import com.cims.util.Md5Util;
+import com.sun.mail.util.LogOutputStream;
 
 @Controller
 public class UserController {
@@ -56,6 +57,12 @@ public class UserController {
 		}
 		
 	}
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("userInfo");
+		return "login";
+	}
+	
 	@RequestMapping(value="/test1")
 	public String test(HttpServletRequest request) {
 		ArrayList<HashMap<String, ArrayList<String>>> templateList = new ArrayList<HashMap<String, ArrayList<String>>>();

@@ -43,11 +43,12 @@
 
     <!--<h2>当前可评教的科目及教师：</h2>-->
 
-    <div class="userinfo">
-        <p>当前用户: <span>${userInfo.tname}</span></p>
-        <button ng-click="logout()" class="logout">退出</button>
-    </div >
+    
 	<div class="outer">
+		<div class="userinfo">
+        <p>当前用户: <span>${userInfo.tname}</span></p>
+         <button id="logout" onclik="window.location.href='/cims/logout'" class="logout">退出</button>
+    	</div >
 	        <div class="menu">
 	            <div class="item">
 	                <div class="title" style="text-align:center;font-size:25px;">待办</div>
